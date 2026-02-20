@@ -70,7 +70,7 @@ class Habito(ABC):
         self.mejor_racha = mejor_racha
 
     # Métodos especiales
-    
+
     def __str__(self):
         return f"{type(self).__name__}('{self.nombre}', racha={self.racha_actual}, registros={len(self.registros)})"
 
@@ -78,3 +78,20 @@ class Habito(ABC):
         return (
             f"{type(self).__name__}(nombre='{self.nombre}', "
             f"frecuencia='{self.frecuencia}', descripcion='{self.descripcion}')")
+
+    # Método de clase
+   
+    @classmethod
+    def total_habitos(cls):
+        return cls.num_habitos
+
+
+
+    # Método estático
+
+    @staticmethod
+    def validar_nombre(nombre):
+        n = (nombre or "").strip()
+        if len(n) < 3:
+            raise ValueError("El nombre debe tener al menos 3 caracteres.")
+        return n
