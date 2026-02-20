@@ -68,3 +68,13 @@ class Habito(ABC):
 
         self.racha_actual = racha_actual
         self.mejor_racha = mejor_racha
+
+    # Métodos especiales
+    
+    def __str__(self):
+        return f"{type(self).__name__}('{self.nombre}', racha={self.racha_actual}, registros={len(self.registros)})"
+
+    def __repr__(self):
+        return (
+            f"{type(self).__name__}(nombre='{self.nombre}', "
+            f"frecuencia='{self.frecuencia}', descripcion='{self.descripcion}')")
