@@ -1,6 +1,4 @@
 from abc import ABC, abstractmethod
-from datetime import date
-from typing import List, Optional, Dict, Any 
 
 class ReglaHabito(ABC):
     def __init__(self, frecuencia, objetivo, minimo):
