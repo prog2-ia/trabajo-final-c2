@@ -6,6 +6,28 @@ class Usuario:
         self._nombre = nombre
         self._planes = []
     
+    @property
+    def id(self):
+        return self._id
+    
+    @property
+    def nombre(self):
+        return self._nombre
+    
+    @nombre.setter
+    def nombre(self, otro):
+        if not isinstance(otro, str):
+            raise TypeError("El nombre debe ser una cadena de texto.")
+        
+        if not otro.strip():
+            raise ValueError("El nombre no puede estar vacío.")
+        
+        self._nombre = otro.strip()
+        
+    @property
+    def planes(self):
+        return self._planes[:]
+        
     def crear_plan(self, nombre):
         nuevo_plan = PlanBienestar(nombre)
         self._planes.append(nuevo_plan)

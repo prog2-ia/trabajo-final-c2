@@ -8,6 +8,47 @@ class Meta:
         self._hijos = []
         self._habitos = []
     
+    @property
+    def id(self):
+        return self._id
+    
+    @property
+    def nombre(self):
+        return self._nombre
+    
+    @nombre.setter
+    def nombre(self, otro):
+        if not isinstance(otro, str):
+            raise TypeError("El nombre debe ser una cadena de texto.")
+        
+        if not otro.strip():
+            raise ValueError("El nombre no puede estar vacío.")
+        
+        self._nombre = otro.strip()
+    
+    @property
+    def peso(self):
+        return self._peso
+    
+    @peso.setter
+    def peso(self, valor):
+        if not isinstance(valor, (int,float)):
+            raise TypeError('El peso de la meta debe ser un número.')
+        
+        if valor<=0 or valor>10:
+            raise ValueError("El peso de la meta debe ser mayor que 0 y menor o igual que 10.")
+
+        self._peso = valor
+        
+    @property
+    def hijos(self):
+        return self._hijos[:]
+    
+    @property
+    def habitos(self):
+        return self._habitos[:]  
+    
+     
     def add_hijo(self, meta):
         
         if not isinstance(meta, Meta):

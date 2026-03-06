@@ -8,6 +8,33 @@ class PlanBienestar:
         self._habitos = {}
         self._creado_en = datetime.now()
     
+    @property
+    def nombre(self):
+        return self._nombre
+    
+    @nombre.setter
+    def nombre(self, otro):
+        if not isinstance(otro, str):
+            raise TypeError("El nombre debe ser una cadena de texto.")
+        
+        if not otro.strip():
+            raise ValueError("El nombre no puede estar vacío.")
+        
+        self._nombre = otro.strip()
+    
+    @property
+    def metas(self):
+        return self._metas[:]
+    
+    @property
+    def habitos(self):
+        return self._habitos
+    
+    @property
+    def creado_en(self):
+        return f'Plan creado en: {self._creado_en}'  
+    
+    
     def add_habito(self, habito):
         if not isinstance(habito, Habito):
             raise ValueError("El objeto introducido no es un Hábito válido.")
