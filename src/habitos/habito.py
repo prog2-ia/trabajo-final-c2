@@ -64,10 +64,8 @@ class Habito(ABC):
     @property
     def racha_actual(self):
         return self._racha_actual
-    
-  # -------------------------------------------------
+
 # MÉTODO ABSTRACTO
-# -------------------------------------------------
 @abstractmethod
 def registrar(self, fecha: date, valor):
     """
@@ -97,9 +95,8 @@ def registrar(self, fecha: date, valor):
     self._add_registro(registro)
 
 
-# -------------------------------------------------
 # MÉTODOS INTERNOS
-# -------------------------------------------------
+
 def _add_registro(self, registro):
     """
     Método protegido para que las subclases añadan registros.
@@ -108,9 +105,8 @@ def _add_registro(self, registro):
     self.ajustar_racha()
 
 
-# -------------------------------------------------
 # LÓGICA
-# -------------------------------------------------
+
 def ajustar_racha(self):
     """
     Calcula la racha diaria consecutiva hacia atrás.
