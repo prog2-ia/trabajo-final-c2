@@ -21,7 +21,7 @@ class Meta:
         
     def add_habito(self, habito):
         if not isinstance(habito, Habito):
-                raise ValueError('Hijo debe ser de tipo Meta.')
+                raise ValueError('Hijo debe ser de tipo Habito.')
         
         for h in self._habitos:
             if h._nombre == habito._nombre:
@@ -60,5 +60,5 @@ class Meta:
         return progreso_habitos
 
     def __str__(self):
-        return f"Meta: {self._nombre} con ID: {self._id} (Peso: {self._peso}). Submetas: {len(self._hijos)}"
+        return f"Meta: {self._nombre} con ID: {self._id} (Peso: {self._peso}). Submetas: {len(self._hijos)}."
     
