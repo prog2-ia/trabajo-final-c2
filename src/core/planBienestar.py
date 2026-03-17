@@ -51,17 +51,17 @@ class PlanBienestar:
         if not self._metas:
             return 0.0
             
-        suma_progresos = sum(meta.progreso(inicio, fin) for meta in self._metas_raiz)
-        return suma_progresos / len(self._metas_raiz)
+        suma_progresos = sum(meta.progreso(inicio, fin) for meta in self._metas)
+        return suma_progresos / len(self._metas)
     
     # SOBRECARGA OPERADORES
     def __add__(self, otro):
         if not isinstance(otro, PlanBienestar):
             raise TypeError("Solo puedes sumar otro PlanBienestar.")
         
-        nuevo_plan = PlanBienestar(f"{self._nombre} + {otro._nombre}")
+        nuevo_plan = PlanBienestar(f"{self._nombre} + {otro.nombre}")
         
-        nuevo_plan._metas = self._metas + otro._metas
+        nuevo_plan._metas = self._metas + otro.metas
         
         # se unen los diccionarios de habitos
         nuevo_plan._habitos = {**self._habitos, **otro._habitos}

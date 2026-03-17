@@ -65,7 +65,7 @@ class Meta:
                 raise ValueError('Hijo debe ser de tipo Habito.')
         
         for h in self._habitos:
-            if h._nombre == habito._nombre:
+            if h._nombre == habito.nombre:
                 raise ValueError(f'El hábito {habito} ya está en es esta meta.')
         
         self._habitos.append(habito)
