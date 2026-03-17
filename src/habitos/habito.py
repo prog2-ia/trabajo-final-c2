@@ -144,19 +144,21 @@ class Habito(ABC):
 
         self._racha_actual = racha
 
-    def progreso(self):
+    def progreso(self, inicio=None, fin=None):
         total = len(self._registros)
 
+        # para compatibilidad con la clase Meta añado este filtro
+        # si se pasan fechas, filtramos los registros de ese periodo
+        if inicio is not None and fin is not None:
+            registros_filtrados = [r for r in self._registros if inicio <= r.fecha <= fin]
+        
+        total = len(registros_filtrados)
         if total == 0:
             return 0.0
 
-        cumplidos = 0
-
-        for r in self._registros:
-            if self._regla.cumplido([r], r.fecha, r.fecha):
-                cumplidos += 1
-
+        cumplidos = sum(1 for r in registros_filtrados if self._regla.cumplido([r], r.fecha, r.fecha))
         return cumplidos / total
+    
 
     # -------------------------------------------------
     # SOBRECARGA

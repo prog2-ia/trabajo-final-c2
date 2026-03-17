@@ -1,4 +1,4 @@
-from planBienestar import PlanBienestar
+from .planBienestar import PlanBienestar
 
 class Usuario:
     def __init__(self, id, nombre):
