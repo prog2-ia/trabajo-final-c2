@@ -2,12 +2,22 @@ from datetime import date
 from core import Usuario, Meta
 from habitos import HabitoBooleano
 from habitos import HabitoNumerico
+from reglas.reglaHabito import ReglaHabito
+from habitos.registro import Registro
+from collections.abc import Sequence
+from typing import Any
 
-class ReglaTemp:
-    def cumplido(self, registros, inicio, fin):
+class ReglaTemp(ReglaHabito):
+    def __init__(self) -> None:
+        super().__init__("diario", 1, 1)
+
+    def cumplido(self, registros: Sequence[Registro], inicio: date, fin: date) -> bool:
         return len(registros) > 0
+    
+    def score(self, registros: Sequence[Registro], inicio: date, fin: date) -> float:
+        return 1.0
 
-def main():
+def main() -> None:
     regla = ReglaTemp()
 
     habito_agua = HabitoNumerico(id="h1", nombre="Beber 2L Agua", regla=regla, unidad_medida="L")
@@ -37,7 +47,6 @@ def main():
     plan_verano.add_habito(habito_fruta)
 
     plan_verano._metas.append(meta_salud)
-    plan_verano._metas_raiz = plan_verano._metas 
 
     plan_combinado = plan_verano + plan_invierno
 

@@ -2,7 +2,7 @@ from datetime import date
 
 
 class Registro:
-    def __init__(self, fecha, valor, nota=None):
+    def __init__(self, fecha: date, valor: int | float | bool, nota: str | None = None) -> None:
         """
         nota: comentario opcional. Si no se pasa nada, será None por defecto.
 
@@ -15,11 +15,11 @@ class Registro:
     # FECHA
     # -------------------------------------------------
     @property
-    def fecha(self):
+    def fecha(self) -> date:
         return self._fecha
 
     @fecha.setter
-    def fecha(self, value):
+    def fecha(self, value: date) -> None:
         if not isinstance(value, date):
             raise TypeError("La fecha debe ser un objeto date")
         self._fecha = value
@@ -28,11 +28,11 @@ class Registro:
     # VALOR
     # -------------------------------------------------
     @property
-    def valor(self):
+    def valor(self) -> int | float | bool:
         return self._valor
 
     @valor.setter
-    def valor(self, value):
+    def valor(self, value: int | float | bool) -> None:
       
         if type(value) not in (int, float, bool):
             raise TypeError("El valor debe ser int, float o bool")
@@ -42,11 +42,11 @@ class Registro:
     # NOTA
     # -------------------------------------------------
     @property
-    def nota(self):
+    def nota(self) -> str | None:
         return self._nota
 
     @nota.setter
-    def nota(self, value):
+    def nota(self, value: str | None) -> None:
        
         if value is not None and not isinstance(value, str):
             raise TypeError("La nota debe ser una cadena o None")
@@ -55,7 +55,7 @@ class Registro:
     # -------------------------------------------------
     # SOBRECARGA
     # -------------------------------------------------
-    def __lt__(self, other):
+    def __lt__(self, other: object) -> bool:
         """
         __lt__ significa 'less than' (<).
 
@@ -74,10 +74,10 @@ class Registro:
             return NotImplemented
         return self._fecha < other._fecha
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Registro(fecha={self._fecha}, valor={self._valor}, nota={self._nota})"
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             f"Registro(fecha={self._fecha!r}, "
             f"valor={self._valor!r}, nota={self._nota!r})"

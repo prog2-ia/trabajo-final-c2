@@ -1,2 +1,2 @@
-from .usuario import Usuario
-from .meta import Meta
+from .usuario import Usuario as Usuario
+from .meta import Meta as Meta

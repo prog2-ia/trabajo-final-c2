@@ -1,27 +1,30 @@
 from abc import ABC, abstractmethod
 from datetime import date
+from typing import Any
+from reglas.reglaHabito import ReglaHabito
+from .registro import Registro
 
 
 class Habito(ABC):
 
-    def __init__(self, id, nombre, regla, activa=True):
+    def __init__(self, id: str, nombre: str, regla: ReglaHabito, activa: bool = True) -> None:
         self.id = id
         self.nombre = nombre
         self.regla = regla
         self.activa = activa
 
-        self._registros = []
-        self._racha_actual = 0
+        self._registros: list[Registro] = []
+        self._racha_actual: int = 0
 
     # -------------------------------------------------
     # ID
     # -------------------------------------------------
     @property
-    def id(self):
+    def id(self) -> str:
         return self._id
 
     @id.setter
-    def id(self, value):
+    def id(self, value: str) -> None:
         if hasattr(self, "_id"):
             raise AttributeError("El id no puede modificarse")
         if not value:
@@ -32,11 +35,11 @@ class Habito(ABC):
     # NOMBRE
     # -------------------------------------------------
     @property
-    def nombre(self):
+    def nombre(self) -> str:
         return self._nombre
 
     @nombre.setter
-    def nombre(self, value):
+    def nombre(self, value: str) -> None:
         if value is None:
             raise ValueError("El nombre no puede ser None")
 
@@ -51,11 +54,11 @@ class Habito(ABC):
     # REGLA
     # -------------------------------------------------
     @property
-    def regla(self):
+    def regla(self) -> ReglaHabito:
         return self._regla
 
     @regla.setter
-    def regla(self, value):
+    def regla(self, value: ReglaHabito) -> None:
         if value is None:
             raise ValueError("La regla no puede ser None")
         self._regla = value
@@ -64,11 +67,11 @@ class Habito(ABC):
     # ACTIVA
     # -------------------------------------------------
     @property
-    def activa(self):
+    def activa(self) -> bool:
         return self._activa
 
     @activa.setter
-    def activa(self, value):
+    def activa(self, value: bool) -> None:
         if type(value) is not bool:
             raise TypeError("El valor debe ser booleano")
         self._activa = value
@@ -77,18 +80,18 @@ class Habito(ABC):
     # SOLO LECTURA
     # -------------------------------------------------
     @property
-    def registros(self):
+    def registros(self) -> list[Registro]:
         return list(self._registros)
 
     @property
-    def racha_actual(self):
+    def racha_actual(self) -> int:
         return self._racha_actual
 
     # -------------------------------------------------
     # MÉTODO ABSTRACTO
     # -------------------------------------------------
     @abstractmethod
-    def registrar(self, fecha: date, valor):
+    def registrar(self, fecha: date, valor: Any) -> None:
         if not isinstance(fecha, date):
             raise TypeError("fecha debe ser un objeto datetime.date")
 
@@ -107,14 +110,14 @@ class Habito(ABC):
     # -------------------------------------------------
     # MÉTODOS INTERNOS
     # -------------------------------------------------
-    def _add_registro(self, registro):
+    def _add_registro(self, registro: Registro) -> None:
         self._registros.append(registro)
         self.ajustar_racha()
 
     # -------------------------------------------------
     # LÓGICA
     # -------------------------------------------------
-    def ajustar_racha(self):
+    def ajustar_racha(self) -> None:
         if len(self._registros) == 0:
             self._racha_actual = 0
             return
@@ -144,13 +147,15 @@ class Habito(ABC):
 
         self._racha_actual = racha
 
-    def progreso(self, inicio=None, fin=None):
+    def progreso(self, inicio: date | None = None, fin: date | None = None) -> float:
         total = len(self._registros)
 
         # para compatibilidad con la clase Meta añado este filtro
         # si se pasan fechas, filtramos los registros de ese periodo
         if inicio is not None and fin is not None:
             registros_filtrados = [r for r in self._registros if inicio <= r.fecha <= fin]
+        else:
+            registros_filtrados = self._registros
         
         total = len(registros_filtrados)
         if total == 0:
@@ -163,21 +168,23 @@ class Habito(ABC):
     # -------------------------------------------------
     # SOBRECARGA
     # -------------------------------------------------
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, Habito):
             return NotImplemented
         return self._id == other._id
 
-    def __lt__(self, other):
+    def __lt__(self, other: object) -> bool:
+        if not isinstance(other, Habito):
+            return NotImplemented
         return self._racha_actual < other._racha_actual
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._registros)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{type(self).__name__}('{self.nombre}', racha={self._racha_actual})"
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             f"{type(self).__name__}(id='{self._id}', "
             f"nombre='{self._nombre}', activa={self._activa})"
