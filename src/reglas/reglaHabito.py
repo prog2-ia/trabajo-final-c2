@@ -1,41 +1,53 @@
 from abc import ABC, abstractmethod
-from typing import Any, Self
-from collections.abc import Sequence
 from datetime import date
+from typing import List
+
 from habitos.registro import Registro
 
+
 class ReglaHabito(ABC):
-    def __init__(self, frecuencia: str, objetivo: int | float, minimo: int | float) -> None:
+
+    def __init__(self, frecuencia: str) -> None:
         self.frecuencia = frecuencia
-        self.objetivo = objetivo
-        self.minimo = minimo
-    
-    def es_valor_valido(self, valor: Any) -> bool:
-        # determina si un valor individual es válido según la regla
-        raise NotImplementedError()
-    
-    def cumplido(self, registros: Sequence[Registro], inicio: date, fin: date) -> bool:
-        raise NotImplementedError()
-    
+
+    # FRECUENCIA
+   
+    @property
+    def frecuencia(self) -> str:
+        return self._frecuencia
+
+    @frecuencia.setter
+    def frecuencia(self, value: str) -> None:
+        if value is None:
+            raise ValueError("La frecuencia no puede ser None")
+
+        value = value.strip()
+
+        if value == "":
+            raise ValueError("La frecuencia no puede estar vacía")
+
+        self._frecuencia = value.lower()
+
+   
+    # MÉTODO ABSTRACTO
+
     @abstractmethod
-    def score(self, registros: Sequence[Registro], inicio: date, fin: date) -> float:
-        raise NotImplementedError()
-    
-    
-    @classmethod
-    def from_dict(cls, datos: dict[str, Any]) -> Self:
-        raise NotImplementedError()
-    
+    def cumplido(
+        self,
+        registros: List[Registro],
+        inicio: date,
+        fin: date
+    ) -> bool:
+        """
+        Devuelve True si la regla se cumple en el periodo [inicio, fin].
+        """
+        pass
 
-class ReglaFrecuencia(ReglaHabito):
-    def __init__(self, frecuencia: str, objetivo: int | float, minimo: int | float) -> None:
-        super().__init__(frecuencia, objetivo, minimo)
-    
-    
-class ReglaUmbral(ReglaHabito):
-    def __init__(self, frecuencia: str, objetivo: int | float, minimo: int | float) -> None:
-        super().__init__(frecuencia, objetivo, minimo) 
+   
+    # REPRESENTACIÓN
+  
+    def __str__(self) -> str:
+        return f"{type(self).__name__}(frecuencia='{self._frecuencia}')"
 
-class ReglaRango(ReglaHabito):
-    def __init__(self, frecuencia: str, objetivo: int | float, minimo: int | float) -> None:
-        super().__init__(frecuencia, objetivo, minimo)
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}(frecuencia={self._frecuencia!r})"
