@@ -66,8 +66,8 @@ class Meta:
                 raise ValueError('Hijo debe ser de tipo Habito.')
         
         for h in self._habitos:
-            if h._nombre == habito.nombre:
-                raise ValueError(f'El hábito {habito} ya está en es esta meta.')
+            if h.nombre == habito.nombre:
+                raise ValueError(f'El hábito {habito} ya está en esta meta.')
         
         self._habitos.append(habito)
     
@@ -87,8 +87,8 @@ class Meta:
         # progreso de los hijos
         if self._hijos:
             for hijo in self._hijos:
-                progreso_hijos += hijo.progreso(inicio, fin) * hijo._peso
-                peso_total_hijos += hijo._peso
+                progreso_hijos += hijo.progreso(inicio, fin) * hijo.peso
+                peso_total_hijos += hijo.peso
             
             if peso_total_hijos > 0:
                 progreso_hijos = progreso_hijos / peso_total_hijos

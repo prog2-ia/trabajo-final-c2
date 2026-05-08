@@ -1,8 +1,10 @@
+from __future__ import annotations
 from abc import ABC, abstractmethod
 from datetime import date
-from typing import List
+from typing import TYPE_CHECKING, List
 
-from habitos.registro import Registro
+if TYPE_CHECKING:
+    from habitos.registro import Registro
 
 
 class ReglaHabito(ABC):

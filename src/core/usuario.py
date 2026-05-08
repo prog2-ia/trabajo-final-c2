@@ -1,5 +1,6 @@
 from .planBienestar import PlanBienestar
 from datetime import date
+from excepciones import PlanVacioError
 
 class Usuario:
     def __init__(self, id: str, nombre: str) -> None:
@@ -36,9 +37,8 @@ class Usuario:
     
     def planes_activos(self) -> list[PlanBienestar]:
         if not self._planes:
-            # usar excepcion personalizada en un futuro
-            raise ValueError(f"El usuario {self._nombre} todavía no tiene ningún plan.")
-        
+            raise PlanVacioError(f"El usuario {self._nombre} todavía no tiene ningún plan.")
+
         return self._planes[:]
     
     def progreso_total(self, inicio: date | None, fin: date | None) -> float:

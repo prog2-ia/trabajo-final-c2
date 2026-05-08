@@ -1,8 +1,11 @@
+from __future__ import annotations
 from datetime import date
-from typing import List
+from typing import TYPE_CHECKING, List
 
-from habitos.registro import Registro
-from reglas.regla_habito import ReglaHabito
+from reglas.reglaHabito import ReglaHabito
+
+if TYPE_CHECKING:
+    from habitos.registro import Registro
 
 
 class ReglaRango(ReglaHabito):

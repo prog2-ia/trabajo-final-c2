@@ -3,6 +3,7 @@ from datetime import date
 from typing import Any
 from reglas.reglaHabito import ReglaHabito
 from .registro import Registro
+from excepciones import HabitoInactivoError, DuplicadoError
 
 
 class Habito(ABC):
@@ -96,11 +97,11 @@ class Habito(ABC):
             raise TypeError("fecha debe ser un objeto datetime.date")
 
         if not self._activa:
-            raise ValueError("No se puede registrar en un hábito inactivo")
+            raise HabitoInactivoError(f"No se puede registrar en el hábito '{self._nombre}' porque está inactivo.")
 
         for r in self._registros:
             if r.fecha == fecha:
-                raise ValueError("Ya existe un registro para esa fecha")
+                raise DuplicadoError(f"Ya existe un registro para la fecha {fecha} en '{self._nombre}'.")
 
         from .registro import Registro
         registro = Registro(fecha, valor)
