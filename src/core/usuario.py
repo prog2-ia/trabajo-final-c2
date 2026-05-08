@@ -1,6 +1,6 @@
 from .planBienestar import PlanBienestar
 from datetime import date
-from excepciones import PlanVacioError
+from excepciones import PlanVacioError, FechaInvalidaError
 
 class Usuario:
     def __init__(self, id: str, nombre: str) -> None:
@@ -42,6 +42,9 @@ class Usuario:
         return self._planes[:]
     
     def progreso_total(self, inicio: date | None, fin: date | None) -> float:
+        if inicio is not None and fin is not None and inicio > fin:
+            raise FechaInvalidaError(f"La fecha de inicio {inicio} es posterior a la fecha de fin {fin}.")
+
         if not self._planes:
             return 0.0
         

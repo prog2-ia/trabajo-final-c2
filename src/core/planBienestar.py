@@ -1,7 +1,7 @@
 from datetime import datetime, date
 from habitos.habito import Habito
 from .meta import Meta
-from excepciones import DuplicadoError
+from excepciones import DuplicadoError, FechaInvalidaError
 
 
 class PlanBienestar:
@@ -57,6 +57,9 @@ class PlanBienestar:
         self._metas.append(meta)
 
     def progreso(self, inicio: date | None, fin: date | None) -> float:
+        if inicio is not None and fin is not None and inicio > fin:
+            raise FechaInvalidaError(f"La fecha de inicio {inicio} es posterior a la fecha de fin {fin}.")
+
         if not self._metas:
             return 0.0
 

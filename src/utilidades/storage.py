@@ -1,5 +1,6 @@
 from datetime import date
 from typing import TYPE_CHECKING
+from excepciones import FechaInvalidaError
 
 if TYPE_CHECKING:
     from habitos.habito import Habito
@@ -33,6 +34,9 @@ def exportar_informe_progreso(
     ruta: str
 ) -> None:
     """Exporta un informe de progreso completo del usuario a un fichero .txt."""
+    if inicio > fin:
+        raise FechaInvalidaError(f"La fecha de inicio {inicio} es posterior a la fecha de fin {fin}.")
+
     with open(ruta, 'w', encoding='utf-8') as f:
         f.write("\n")
         f.write(f"INFORME DE PROGRESO\n")

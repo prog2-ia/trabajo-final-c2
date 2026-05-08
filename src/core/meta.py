@@ -1,5 +1,6 @@
 from habitos.habito import Habito
 from datetime import date
+from excepciones import DuplicadoError, FechaInvalidaError
 
 class Meta:
     def __init__(self, id: str, nombre: str, peso: int | float) -> None:
@@ -57,7 +58,7 @@ class Meta:
             
         for hijo in self._hijos:
             if hijo._id == meta.id:
-                raise ValueError(f'La meta {meta} ya existe como hija.')
+                raise DuplicadoError(f'La meta {meta} ya existe como hija.')
         
         self._hijos.append(meta)
         
@@ -67,13 +68,15 @@ class Meta:
         
         for h in self._habitos:
             if h.nombre == habito.nombre:
-                raise ValueError(f'El hábito {habito} ya está en esta meta.')
+                raise DuplicadoError(f'El hábito {habito} ya está en esta meta.')
         
         self._habitos.append(habito)
     
 
     def progreso(self, inicio: date | None, fin: date | None) -> float:
-        
+        if inicio is not None and fin is not None and inicio > fin:
+            raise FechaInvalidaError(f"La fecha de inicio {inicio} es posterior a la fecha de fin {fin}.")
+
         progreso_habitos = 0.0
         
         # progreso de los habitos

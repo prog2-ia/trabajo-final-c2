@@ -3,7 +3,7 @@ from datetime import date
 from typing import Any
 from reglas.reglaHabito import ReglaHabito
 from .registro import Registro
-from excepciones import HabitoInactivoError, DuplicadoError
+from excepciones import HabitoInactivoError, DuplicadoError, FechaInvalidaError
 
 
 class Habito(ABC):
@@ -95,6 +95,9 @@ class Habito(ABC):
     def registrar(self, fecha: date, valor: Any) -> None:
         if not isinstance(fecha, date):
             raise TypeError("fecha debe ser un objeto datetime.date")
+
+        if fecha > date.today():
+            raise FechaInvalidaError(f"La fecha {fecha} no puede ser futura.")
 
         if not self._activa:
             raise HabitoInactivoError(f"No se puede registrar en el hábito '{self._nombre}' porque está inactivo.")
