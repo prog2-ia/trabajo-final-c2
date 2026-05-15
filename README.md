@@ -16,7 +16,13 @@ La sesión se guarda automáticamente en un fichero binario (pickle) al salir, y
 ---
 
 ## Cómo ejecutar
-
+### Crear entorno virtual
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+### Ejecutar proyecto
 ```bash
 cd src
 python main.py
@@ -34,7 +40,7 @@ Al arrancar se pide el nombre de usuario. Si existe una sesión guardada para es
   (Sesión cargada: 2 plan(es) restaurado(s))
 
 --------------------------------------
-  MENÚ PRINCIPAL  —  Alex
+  MENÚ PRINCIPAL  -  Alex
 --------------------------------------
   1. Gestión de Planes
   2. Gestión de Hábitos
