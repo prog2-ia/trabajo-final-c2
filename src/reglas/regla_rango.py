@@ -8,6 +8,8 @@ if TYPE_CHECKING:
     from habitos.registro import Registro
 
 
+# regla que se cumple si todos los valores registrados están dentro de [minimo, maximo]
+# útil para hábitos como "dormir entre 7 y 9 horas"
 class ReglaRango(ReglaHabito):
 
     def __init__(
@@ -22,22 +24,21 @@ class ReglaRango(ReglaHabito):
         self.minimo = minimo
         self.maximo = maximo
 
-   
+
     # MÍNIMO
-    
+
     @property
     def minimo(self) -> float:
         return self._minimo
 
     @minimo.setter
     def minimo(self, value: float) -> None:
-
         if type(value) not in (int, float):
             raise TypeError("minimo debe ser numérico")
 
-        self._minimo = float(value)
+        self._minimo = float(value)  # convierto a float para consistencia
 
-   
+
     # MÁXIMO
 
     @property
@@ -46,7 +47,6 @@ class ReglaRango(ReglaHabito):
 
     @maximo.setter
     def maximo(self, value: float) -> None:
-
         if type(value) not in (int, float):
             raise TypeError("maximo debe ser numérico")
 
@@ -64,23 +64,19 @@ class ReglaRango(ReglaHabito):
         valores_periodo = []
 
         for registro in registros:
-
-            # Solo usamos registros dentro del periodo
             if inicio <= registro.fecha <= fin:
-
-                # Si aparece un valor no numérico, falla
+                # si hay algún valor que no es número, directamente no se cumple
                 if type(registro.valor) not in (int, float):
                     return False
 
                 valores_periodo.append(registro.valor)
 
-        # Si no hay datos en el periodo, no se cumple
+        # si no hubo registros en el periodo, no se puede dar por cumplido
         if len(valores_periodo) == 0:
             return False
 
-        # Todos los valores deben estar dentro del rango
+        # todos los valores tienen que estar dentro del rango, no solo el promedio
         for valor in valores_periodo:
-
             if valor < self._minimo:
                 return False
 

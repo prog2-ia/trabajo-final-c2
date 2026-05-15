@@ -3,17 +3,19 @@ from abc import ABC, abstractmethod
 from datetime import date
 from typing import TYPE_CHECKING, List
 
+# evito importar Registro directamente para no crear dependencia circular
 if TYPE_CHECKING:
     from habitos.registro import Registro
 
 
+# clase base abstracta para todas las reglas, no se puede usar sola
 class ReglaHabito(ABC):
 
     def __init__(self, frecuencia: str) -> None:
         self.frecuencia = frecuencia
 
     # FRECUENCIA
-   
+
     @property
     def frecuencia(self) -> str:
         return self._frecuencia
@@ -28,11 +30,12 @@ class ReglaHabito(ABC):
         if value == "":
             raise ValueError("La frecuencia no puede estar vacía")
 
+        # guardo todo en minúsculas para evitar problemas con "Diario" vs "diario"
         self._frecuencia = value.lower()
 
-   
-    # MÉTODO ABSTRACTO
 
+    # MÉTODO ABSTRACTO
+    # cada subclase define su propia lógica para saber si el hábito se cumplió
     @abstractmethod
     def cumplido(
         self,
@@ -40,14 +43,11 @@ class ReglaHabito(ABC):
         inicio: date,
         fin: date
     ) -> bool:
-        """
-        Devuelve True si la regla se cumple en el periodo [inicio, fin].
-        """
         pass
 
-   
+
     # REPRESENTACIÓN
-  
+
     def __str__(self) -> str:
         return f"{type(self).__name__}(frecuencia='{self._frecuencia}')"
 

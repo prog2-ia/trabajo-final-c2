@@ -8,6 +8,8 @@ if TYPE_CHECKING:
     from habitos.registro import Registro
 
 
+# regla que se cumple si la suma de valores del periodo supera un mínimo
+# por ejemplo: "correr al menos 10 km por semana"
 class ReglaUmbral(ReglaHabito):
 
     def __init__(self, frecuencia: str, objetivo_minimo: float) -> None:
@@ -21,7 +23,6 @@ class ReglaUmbral(ReglaHabito):
 
     @objetivo_minimo.setter
     def objetivo_minimo(self, value: float) -> None:
-
         if type(value) not in (int, float):
             raise TypeError("objetivo_minimo debe ser numérico")
 
@@ -42,16 +43,14 @@ class ReglaUmbral(ReglaHabito):
         total = 0.0
 
         for registro in registros:
-
-            # Solo contamos registros dentro del periodo
             if inicio <= registro.fecha <= fin:
-
-                # Ignoramos registros no numéricos
+                # si el valor no es numérico lo salteo, no quiero que explote
                 if type(registro.valor) not in (int, float):
                     continue
 
                 total += registro.valor
 
+        # se cumple si la suma acumulada llega al objetivo
         return total >= self._objetivo_minimo
 
     # REPRESENTACIÓN

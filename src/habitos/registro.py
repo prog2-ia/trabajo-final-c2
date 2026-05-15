@@ -1,15 +1,12 @@
 from datetime import date
 
 
+# cada vez que el usuario completa un hábito, se guarda un Registro con la fecha y el valor
 class Registro:
     def __init__(self, fecha: date, valor: int | float | bool, nota: str | None = None) -> None:
-        """
-        nota: comentario opcional. Si no se pasa nada, será None por defecto.
-
-        """
         self.fecha = fecha
         self.valor = valor
-        self.nota = nota
+        self.nota = nota  # campo opcional por si el usuario quiere escribir algo extra
 
     # FECHA
     @property
@@ -29,7 +26,6 @@ class Registro:
 
     @valor.setter
     def valor(self, value: int | float | bool) -> None:
-      
         if type(value) not in (int, float, bool):
             raise TypeError("El valor debe ser int, float o bool")
         self._valor = value
@@ -41,27 +37,13 @@ class Registro:
 
     @nota.setter
     def nota(self, value: str | None) -> None:
-       
         if value is not None and not isinstance(value, str):
             raise TypeError("La nota debe ser una cadena o None")
         self._nota = value
 
     # SOBRECARGA
     def __lt__(self, other: object) -> bool:
-        """
-        __lt__ significa 'less than' (<).
-
-        Sirve para que Python sepa comparar dos objetos Registro
-        usando el operador <.
-
-        En este caso, se compara por fecha para que los registros
-        puedan ordenarse cronológicamente.
-
-        Gracias a esto, luego podemos hacer:
-            lista_registros.sort()
-
-        y Python sabrá cómo ordenarlos.
-        """
+        # necesito esto para poder hacer lista.sort() y que los registros queden en orden cronológico
         if not isinstance(other, Registro):
             return NotImplemented
         return self._fecha < other._fecha

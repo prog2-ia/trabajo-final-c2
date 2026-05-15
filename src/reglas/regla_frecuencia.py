@@ -8,6 +8,8 @@ if TYPE_CHECKING:
     from habitos.registro import Registro
 
 
+# regla que se cumple si el hábito se registró al menos N veces en el periodo
+# por ejemplo: "al menos 3 veces por semana"
 class ReglaFrecuencia(ReglaHabito):
 
     def __init__(self, frecuencia: str, veces_objetivo: int) -> None:
@@ -16,7 +18,7 @@ class ReglaFrecuencia(ReglaHabito):
 
 
     # VECES OBJETIVO
-   
+
     @property
     def veces_objetivo(self) -> int:
         return self._veces_objetivo
@@ -32,24 +34,26 @@ class ReglaFrecuencia(ReglaHabito):
         self._veces_objetivo = value
 
     # MÉTODO PRINCIPAL
-   
+
     def cumplido(
         self,
         registros: List[Registro],
         inicio: date,
         fin: date
     ) -> bool:
+        # cuento cuántos registros caen dentro del periodo
         contador = 0
 
         for registro in registros:
             if inicio <= registro.fecha <= fin:
                 contador += 1
 
+        # si llegué al objetivo, se considera cumplido
         return contador >= self._veces_objetivo
 
 
     # REPRESENTACIÓN
-  
+
     def __str__(self) -> str:
         return (
             f"ReglaFrecuencia(frecuencia='{self.frecuencia}', "
