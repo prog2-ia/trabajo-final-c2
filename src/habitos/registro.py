@@ -11,9 +11,7 @@ class Registro:
         self.valor = valor
         self.nota = nota
 
-    # -------------------------------------------------
     # FECHA
-    # -------------------------------------------------
     @property
     def fecha(self) -> date:
         return self._fecha
@@ -24,9 +22,7 @@ class Registro:
             raise TypeError("La fecha debe ser un objeto date")
         self._fecha = value
 
-    # -------------------------------------------------
     # VALOR
-    # -------------------------------------------------
     @property
     def valor(self) -> int | float | bool:
         return self._valor
@@ -38,9 +34,7 @@ class Registro:
             raise TypeError("El valor debe ser int, float o bool")
         self._valor = value
 
-    # -------------------------------------------------
     # NOTA
-    # -------------------------------------------------
     @property
     def nota(self) -> str | None:
         return self._nota
@@ -52,9 +46,7 @@ class Registro:
             raise TypeError("La nota debe ser una cadena o None")
         self._nota = value
 
-    # -------------------------------------------------
     # SOBRECARGA
-    # -------------------------------------------------
     def __lt__(self, other: object) -> bool:
         """
         __lt__ significa 'less than' (<).

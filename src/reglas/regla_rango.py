@@ -22,9 +22,9 @@ class ReglaRango(ReglaHabito):
         self.minimo = minimo
         self.maximo = maximo
 
-    # -------------------------------------------------
+   
     # MÍNIMO
-    # -------------------------------------------------
+    
     @property
     def minimo(self) -> float:
         return self._minimo
@@ -37,9 +37,9 @@ class ReglaRango(ReglaHabito):
 
         self._minimo = float(value)
 
-    # -------------------------------------------------
+   
     # MÁXIMO
-    # -------------------------------------------------
+
     @property
     def maximo(self) -> float:
         return self._maximo
@@ -52,9 +52,8 @@ class ReglaRango(ReglaHabito):
 
         self._maximo = float(value)
 
-    # -------------------------------------------------
     # MÉTODO PRINCIPAL
-    # -------------------------------------------------
+
     def cumplido(
         self,
         registros: List[Registro],
@@ -90,9 +89,8 @@ class ReglaRango(ReglaHabito):
 
         return True
 
-    # -------------------------------------------------
+
     # REPRESENTACIÓN
-    # -------------------------------------------------
     def __str__(self) -> str:
         return (
             f"ReglaRango(frecuencia='{self.frecuencia}', "

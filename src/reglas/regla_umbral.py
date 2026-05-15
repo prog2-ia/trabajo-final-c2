@@ -14,9 +14,7 @@ class ReglaUmbral(ReglaHabito):
         super().__init__(frecuencia)
         self.objetivo_minimo = objetivo_minimo
 
-    # -------------------------------------------------
     # OBJETIVO MÍNIMO
-    # -------------------------------------------------
     @property
     def objetivo_minimo(self) -> float:
         return self._objetivo_minimo
@@ -32,9 +30,8 @@ class ReglaUmbral(ReglaHabito):
 
         self._objetivo_minimo = float(value)
 
-    # -------------------------------------------------
+
     # MÉTODO PRINCIPAL
-    # -------------------------------------------------
     def cumplido(
         self,
         registros: List[Registro],
@@ -57,9 +54,7 @@ class ReglaUmbral(ReglaHabito):
 
         return total >= self._objetivo_minimo
 
-    # -------------------------------------------------
     # REPRESENTACIÓN
-    # -------------------------------------------------
     def __str__(self) -> str:
         return (
             f"ReglaUmbral(frecuencia='{self.frecuencia}', "

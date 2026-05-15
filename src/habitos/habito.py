@@ -17,9 +17,7 @@ class Habito(ABC):
         self._registros: list[Registro] = []
         self._racha_actual: int = 0
 
-    # -------------------------------------------------
     # ID
-    # -------------------------------------------------
     @property
     def id(self) -> str:
         return self._id
@@ -32,9 +30,7 @@ class Habito(ABC):
             raise ValueError("El id no puede estar vacío")
         self._id = value
 
-    # -------------------------------------------------
     # NOMBRE
-    # -------------------------------------------------
     @property
     def nombre(self) -> str:
         return self._nombre
@@ -51,9 +47,7 @@ class Habito(ABC):
 
         self._nombre = value
 
-    # -------------------------------------------------
     # REGLA
-    # -------------------------------------------------
     @property
     def regla(self) -> ReglaHabito:
         return self._regla
@@ -64,9 +58,8 @@ class Habito(ABC):
             raise ValueError("La regla no puede ser None")
         self._regla = value
 
-    # -------------------------------------------------
+   
     # ACTIVA
-    # -------------------------------------------------
     @property
     def activa(self) -> bool:
         return self._activa
@@ -77,9 +70,7 @@ class Habito(ABC):
             raise TypeError("El valor debe ser booleano")
         self._activa = value
 
-    # -------------------------------------------------
     # SOLO LECTURA
-    # -------------------------------------------------
     @property
     def registros(self) -> list[Registro]:
         return list(self._registros)
@@ -88,9 +79,7 @@ class Habito(ABC):
     def racha_actual(self) -> int:
         return self._racha_actual
 
-    # -------------------------------------------------
     # MÉTODO ABSTRACTO
-    # -------------------------------------------------
     @abstractmethod
     def registrar(self, fecha: date, valor: Any) -> None:
         if not isinstance(fecha, date):
@@ -111,16 +100,12 @@ class Habito(ABC):
 
         self._add_registro(registro)
 
-    # -------------------------------------------------
     # MÉTODOS INTERNOS
-    # -------------------------------------------------
     def _add_registro(self, registro: Registro) -> None:
         self._registros.append(registro)
         self.ajustar_racha()
 
-    # -------------------------------------------------
     # LÓGICA
-    # -------------------------------------------------
     def ajustar_racha(self) -> None:
         if len(self._registros) == 0:
             self._racha_actual = 0
@@ -169,9 +154,7 @@ class Habito(ABC):
         return cumplidos / total
     
 
-    # -------------------------------------------------
     # SOBRECARGA
-    # -------------------------------------------------
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Habito):
             return NotImplemented
