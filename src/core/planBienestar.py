@@ -8,6 +8,7 @@ class PlanBienestar:
     def __init__(self, nombre: str) -> None:
         self._nombre = nombre
         self._metas: list[Meta] = []
+        # dict indexado por nombre del hábito para búsqueda rápida
         self._habitos: dict[str, Habito] = {}
         self._creado_en: datetime = datetime.now()
 
@@ -60,14 +61,16 @@ class PlanBienestar:
         if inicio is not None and fin is not None and inicio > fin:
             raise FechaInvalidaError(f"La fecha de inicio {inicio} es posterior a la fecha de fin {fin}.")
 
+        # sin metas no hay progreso que calcular
         if not self._metas:
             return 0.0
 
         suma_progresos = sum(meta.progreso(inicio, fin) for meta in self._metas)
         return suma_progresos / len(self._metas)
 
-    # SOBRECARGA OPERADORES
+    # sobrecarga de operadores
     def __add__(self, otro: object) -> 'PlanBienestar':
+        # fusiona dos planes en uno nuevo combinando sus hábitos y metas
         if not isinstance(otro, PlanBienestar):
             raise TypeError("Solo puedes sumar otro PlanBienestar.")
 
@@ -77,6 +80,7 @@ class PlanBienestar:
         return nuevo_plan
 
     def __lt__(self, otro: object) -> bool:
+        # compara el progreso acumulado desde la fecha de creación de cada plan hasta hoy
         if not isinstance(otro, PlanBienestar):
             raise TypeError("Solo puedes comparar con otro PlanBienestar.")
 
@@ -86,6 +90,7 @@ class PlanBienestar:
         return progreso_self < progreso_otro
 
     def __len__(self) -> int:
+        # número de hábitos registrados en el plan
         return len(self._habitos)
 
     def __str__(self) -> str:
